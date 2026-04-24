@@ -394,7 +394,7 @@ unsigned int psk_server_cb(SSL* ssl,
     int psklen = Bsnprintf((char*)psk_output, max_psk_len, "%s",
                            configured_psk.c_str());
     result = (psklen < 0) ? 0 : psklen;
-    Dmsg1(100, "psk_server_cb. result: %d.\n", result);
+    Dmsg1(100, "psk_server_cb. result: %u.\n", result);
   }
   return result;
 }

@@ -152,10 +152,11 @@ bool BareosDb::UpdatePathHierarchyCache(JobControlRecord* jcr,
     if (!QueryDb(jcr, cmd)) { goto bail_out; }
 
     if (SqlNumRows() > 0) {
-      Dmsg1(dbglevel, "Already computed %d\n", (uint32_t)JobId);
+      Dmsg1(dbglevel, "Already computed %" PRIu32 "\n",
+            static_cast<uint32_t>(JobId));
       retval = true;
     } else {
-      Dmsg1(dbglevel, "already in progress %d\n", (uint32_t)JobId);
+      Dmsg1(dbglevel, "already in progress %" PRIu32 "\n", static_cast<uint32_t>(JobId));
       retval = false;
     }
     goto bail_out;
@@ -179,7 +180,8 @@ bool BareosDb::UpdatePathHierarchyCache(JobControlRecord* jcr,
        jobid, jobid);
 
   if (!QueryDb(jcr, cmd)) {
-    Dmsg1(dbglevel, "Can't fill PathVisibility %d\n", (uint32_t)JobId);
+    Dmsg1(dbglevel, "Can't fill PathVisibility %" PRIu32 "\n",
+          static_cast<uint32_t>(JobId));
     goto bail_out;
   }
 
@@ -199,7 +201,8 @@ bool BareosDb::UpdatePathHierarchyCache(JobControlRecord* jcr,
        jobid);
 
   if (!QueryDb(jcr, cmd)) {
-    Dmsg1(dbglevel, "Can't get new Path %d\n", (uint32_t)JobId);
+    Dmsg1(dbglevel, "Can't get new Path %" PRIu32 "\n",
+          static_cast<uint32_t>(JobId));
     goto bail_out;
   }
 
@@ -279,7 +282,7 @@ void BareosDb::BvfsUpdateCache(JobControlRecord* jcr)
        "WHERE NOT EXISTS "
        "(SELECT 1 FROM Job WHERE JobId=PathVisibility.JobId)");
   nb = DeleteDb(jcr, cmd);
-  Dmsg1(dbglevel, "Affected row(s) = %d\n", nb);
+  Dmsg1(dbglevel, "Affected row(s) = %" PRIu32 "\n", nb);
   EndTransaction(jcr);
 }
 
