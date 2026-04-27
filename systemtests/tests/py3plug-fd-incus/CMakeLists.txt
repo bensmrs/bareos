@@ -52,12 +52,7 @@ if(Python3_VERSION VERSION_LESS "3.13")
   return()
 endif()
 
-if(INCUS
-   AND GUESTFISH
-   AND LZMA
-   AND QEMUIMG
-   AND VIRTRESIZE
-)
+if(INCUS)
   create_systemtest(${SYSTEMTEST_PREFIX} ${BASENAME})
 else()
   create_systemtest(
