@@ -92,12 +92,12 @@ bool job_cmd(JobControlRecord* jcr)
   // Get JobId and permissions from Director
   Dmsg1(100, "<dird: %s", dir->msg);
   bstrncpy(spool_size, "0", sizeof(spool_size));
-  status = sscanf(dir->msg, jobcmd, &JobId, job.c_str(), job_name.c_str(),
-                  client_name.c_str(), &JobType, &level, fileset_name.c_str(),
-                  &no_attributes, &spool_attributes, fileset_md5.c_str(),
-                  &spool_data, &PreferMountedVols, spool_size, &rerunning,
-                  &jcr->VolSessionId, &jcr->VolSessionTime, &quota, &protocol,
-                  backup_format.c_str());
+  status = bsscanf(dir->msg, jobcmd, &JobId, job.c_str(), job_name.c_str(),
+                   client_name.c_str(), &JobType, &level, fileset_name.c_str(),
+                   &no_attributes, &spool_attributes, fileset_md5.c_str(),
+                   &spool_data, &PreferMountedVols, spool_size, &rerunning,
+                   &jcr->VolSessionId, &jcr->VolSessionTime, &quota, &protocol,
+                   backup_format.c_str());
   if (status != 19) {
     PmStrcpy(jcr->errmsg, dir->msg);
     dir->fsend(BAD_job, status, jcr->errmsg);

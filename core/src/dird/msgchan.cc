@@ -175,7 +175,7 @@ bool ReserveReadDevice(JobControlRecord* jcr,
     if (BgetDirmsg(sd_socket) > 0) {
       Dmsg1(100, "<stored: %s", sd_socket->msg);
       // ****FIXME**** save actual device name
-      ok = sscanf(sd_socket->msg, OK_device, device_name.c_str()) == 1;
+      ok = bsscanf(sd_socket->msg, OK_device, device_name.c_str()) == 1;
     } else {
       ok = false;
     }
@@ -251,7 +251,7 @@ bool ReserveWriteDevice(JobControlRecord* jcr,
     if (BgetDirmsg(jcr->store_bsock) > 0) {
       Dmsg1(100, "<stored: %s", jcr->store_bsock->msg);
       // ****FIXME**** save actual device name
-      ok = sscanf(jcr->store_bsock->msg, OK_device, device_name.c_str()) == 1;
+      ok = bsscanf(jcr->store_bsock->msg, OK_device, device_name.c_str()) == 1;
     } else {
       ok = false;
     }
@@ -372,8 +372,8 @@ bool StartStorageDaemonJob(JobControlRecord* jcr, bool send_bsr)
   if (BgetDirmsg(sd_socket) > 0) {
     Dmsg1(100, "<stored: %s", sd_socket->msg);
     char auth_key[100];
-    if (sscanf(sd_socket->msg, OK_job, &jcr->VolSessionId, &jcr->VolSessionTime,
-               &auth_key)
+    if (bsscanf(sd_socket->msg, OK_job, &jcr->VolSessionId,
+                &jcr->VolSessionTime, &auth_key)
         != 3) {
       Dmsg1(100, "BadJob=%s\n", sd_socket->msg);
       Jmsg(jcr, M_FATAL, 0, T_("Storage daemon rejected Job command: %s\n"),
@@ -484,7 +484,7 @@ extern "C" void* msg_thread(void* arg)
     Dmsg1(400, "<stored: %s", sd->msg);
     /* Check for "3000 OK Job Authorization="
      * Returned by a rerun cmd. */
-    if (sscanf(sd->msg, OK_nextrun, &auth_key) == 1) {
+    if (bsscanf(sd->msg, OK_nextrun, &auth_key) == 1) {
       if (jcr->sd_auth_key) { free(jcr->sd_auth_key); }
       jcr->sd_auth_key = strdup(auth_key);
       pthread_cond_broadcast(
@@ -493,12 +493,12 @@ extern "C" void* msg_thread(void* arg)
     }
 
     // Check for "3010 Job <jobid> start"
-    if (sscanf(sd->msg, Job_start, Job) == 1) { continue; }
+    if (bsscanf(sd->msg, Job_start, Job) == 1) { continue; }
 
     /* Check for "3099 Job <JobId> end JobStatus= JobFiles= JobBytes=
      * JobErrors=" */
-    if (sscanf(sd->msg, Job_end, Job, &JobStatus, &JobFiles, &JobBytes,
-               &JobErrors)
+    if (bsscanf(sd->msg, Job_end, Job, &JobStatus, &JobFiles, &JobBytes,
+                &JobErrors)
         == 5) {
       jcr->dir_impl->SDJobStatus = JobStatus; /* termination status */
       jcr->dir_impl->SDJobFiles = JobFiles;

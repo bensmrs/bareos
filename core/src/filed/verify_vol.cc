@@ -93,8 +93,8 @@ void DoVerifyVolume(JobControlRecord* jcr)
   // Get a record from the Storage daemon
   while (BgetMsg(sd) >= 0 && !jcr->IsJobCanceled()) {
     // First we expect a Stream Record Header
-    if (sscanf(sd->msg, "rechdr %lu %lu %lu %ld %lu", &VolSessionId,
-               &VolSessionTime, &file_index, &stream, &size)
+    if (bsscanf(sd->msg, "rechdr %lu %lu %lu %ld %lu", &VolSessionId,
+                &VolSessionTime, &file_index, &stream, &size)
         != 5) {
       Jmsg1(jcr, M_FATAL, 0, T_("Record header scan error: %s\n"), sd->msg);
       goto bail_out;
@@ -140,7 +140,7 @@ void DoVerifyVolume(JobControlRecord* jcr)
          *    Attributes
          *    Link name (if file linked i.e. FT_LNK)
          *    Extended Attributes (if Win32) */
-        if (sscanf(sd->msg, "%d %d", &record_file_index, &type) != 2) {
+        if (bsscanf(sd->msg, "%d %d", &record_file_index, &type) != 2) {
           Jmsg(jcr, M_FATAL, 0, T_("Error scanning record header: %s\n"),
                sd->msg);
           Dmsg0(0, "\nError scanning header\n");

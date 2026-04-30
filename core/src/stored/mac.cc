@@ -230,10 +230,8 @@ static bool CloneRecordInternally(DeviceControlRecord* dcr,
 
   while (!WriteRecordToBlock(jcr->sd_impl->dcr, jcr->sd_impl->dcr->after_rec)) {
     Dmsg4(200,
-          "!WriteRecordToBlock blkpos=%u:%u len=%" PRIu32 " rem=%" PRIu32
-          "\n",
-          dev->file,
-          dev->block_num, jcr->sd_impl->dcr->after_rec->data_len,
+          "!WriteRecordToBlock blkpos=%u:%u len=%" PRIu32 " rem=%" PRIu32 "\n",
+          dev->file, dev->block_num, jcr->sd_impl->dcr->after_rec->data_len,
           jcr->sd_impl->dcr->after_rec->remainder);
     if (!jcr->sd_impl->dcr->WriteBlockToDevice()) {
       Dmsg2(90, "Got WriteBlockToDev error on device %s. %s\n",
@@ -253,8 +251,9 @@ static bool CloneRecordInternally(DeviceControlRecord* dcr,
   jcr->JobBytes += jcr->sd_impl->dcr->after_rec
                        ->data_len; /* increment bytes of this job */
 
-  Dmsg5(500, "wrote_record JobId=%" PRIu32 " FI=%s SessId=%" PRIu32
-              " Strm=%s len=%" PRIu32 "\n",
+  Dmsg5(500,
+        "wrote_record JobId=%" PRIu32 " FI=%s SessId=%" PRIu32
+        " Strm=%s len=%" PRIu32 "\n",
         jcr->JobId, FI_to_ascii(buf1, jcr->sd_impl->dcr->after_rec->FileIndex),
         jcr->sd_impl->dcr->after_rec->VolSessionId,
         stream_to_ascii(buf2, jcr->sd_impl->dcr->after_rec->Stream,
@@ -385,8 +384,9 @@ static bool CloneRecordToRemoteSd(DeviceControlRecord* dcr,
   jcr->JobBytes += sd->message_length;
   sd->msg = msgsave;
 
-  Dmsg5(200, "wrote_record JobId=%" PRIu32 " FI=%s SessId=%" PRIu32
-              " Strm=%s len=%" PRIu32 "\n",
+  Dmsg5(200,
+        "wrote_record JobId=%" PRIu32 " FI=%s SessId=%" PRIu32
+        " Strm=%s len=%" PRIu32 "\n",
         jcr->JobId, FI_to_ascii(buf1, rec->FileIndex), rec->VolSessionId,
         stream_to_ascii(buf2, rec->Stream, rec->FileIndex), rec->data_len);
 
@@ -539,7 +539,7 @@ bool DoMacRun(JobControlRecord* jcr)
     // Expect to receive back the Ticket number.
     if (BgetMsg(sd) >= 0) {
       Dmsg1(110, "<stored: %s", sd->msg);
-      if (sscanf(sd->msg, OK_start_replicate, &jcr->sd_impl->Ticket) != 1) {
+      if (bsscanf(sd->msg, OK_start_replicate, &jcr->sd_impl->Ticket) != 1) {
         Jmsg(jcr, M_FATAL, 0, T_("Bad response to start replicate: %s\n"),
              sd->msg);
         goto bail_out;

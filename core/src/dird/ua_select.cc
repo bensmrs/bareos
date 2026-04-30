@@ -1456,7 +1456,7 @@ drive_number_t GetStorageDrive(UaContext* ua, StorageResource* store)
           < 0) {
         drive = kInvalidDriveNumber; /* None */
       } else {
-        sscanf(drivename, "Drive %hd", &drive);
+        bsscanf(drivename, "Drive %hd", &drive);
       }
     }
   } else {
@@ -1794,7 +1794,7 @@ alist<JobId_t*>* select_jobs(UaContext* ua, const char* reason)
         }
       }
 
-      sscanf(buf, "JobId=%d Job=%127s", &njobs, JobName);
+      bsscanf(buf, "JobId=%d Job=%127s", &njobs, JobName);
       jcr = get_jcr_by_full_name(JobName);
       if (!jcr) {
         ua->WarningMsg(T_("Job \"%s\" not found.\n"), JobName);

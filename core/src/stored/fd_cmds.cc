@@ -371,13 +371,13 @@ static bool ReadOpenSession(JobControlRecord* jcr)
     return false;
   }
 
-  if (sscanf(fd->msg, read_open, jcr->sd_impl->read_dcr->VolumeName,
-             &jcr->sd_impl->read_session.read_VolSessionId,
-             &jcr->sd_impl->read_session.read_VolSessionTime,
-             &jcr->sd_impl->read_session.read_StartFile,
-             &jcr->sd_impl->read_session.read_EndFile,
-             &jcr->sd_impl->read_session.read_StartBlock,
-             &jcr->sd_impl->read_session.read_EndBlock)
+  if (bsscanf(fd->msg, read_open, jcr->sd_impl->read_dcr->VolumeName,
+              &jcr->sd_impl->read_session.read_VolSessionId,
+              &jcr->sd_impl->read_session.read_VolSessionTime,
+              &jcr->sd_impl->read_session.read_StartFile,
+              &jcr->sd_impl->read_session.read_EndFile,
+              &jcr->sd_impl->read_session.read_StartBlock,
+              &jcr->sd_impl->read_session.read_EndBlock)
       == 7) {
     if (jcr->sd_impl->session_opened) {
       PmStrcpy(jcr->errmsg, T_("Attempt to open read on non-open session.\n"));

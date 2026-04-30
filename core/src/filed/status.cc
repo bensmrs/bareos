@@ -432,7 +432,7 @@ bool QstatusCmd(JobControlRecord* jcr)
   sp.bs = dir;
   cmd = GetMemory(dir->message_length + 1);
 
-  if (sscanf(dir->msg, qstatus, cmd) != 1) {
+  if (bsscanf(dir->msg, qstatus, cmd) != 1) {
     PmStrcpy(jcr->errmsg, dir->msg);
     Jmsg1(jcr, M_FATAL, 0, T_("Bad .status command: %s\n"), jcr->errmsg);
     dir->fsend(T_("2900 Bad .status command, missing argument.\n"));

@@ -3,7 +3,7 @@
 
    Copyright (C) 2000-2011 Free Software Foundation Europe e.V.
    Copyright (C) 2011-2016 Planets Communications B.V.
-   Copyright (C) 2013-2025 Bareos GmbH & Co. KG
+   Copyright (C) 2013-2026 Bareos GmbH & Co. KG
 
    This program is Free Software; you can redistribute it and/or
    modify it under the terms of version three of the GNU Affero General Public
@@ -321,8 +321,7 @@ bool DoVerify(JobControlRecord* jcr)
               static_cast<unsigned int>(tls_policy));
 
         fd->fsend(storaddrcmd, store->address, store->SDport,
-                  static_cast<unsigned int>(tls_policy),
-                  jcr->sd_auth_key);
+                  static_cast<unsigned int>(tls_policy), jcr->sd_auth_key);
         if (!response(jcr, fd, OKstore, "Storage", DISPLAY_ERROR)) {
           goto bail_out;
         }
@@ -507,18 +506,18 @@ void VerifyCleanup(JobControlRecord* jcr, int TermCode)
       Jmsg(jcr, msg_type, 0,
            T_("%s %s %s (%s):\n"
               "  OS Information:         %s\n"
-               "  JobId:                  %" PRIu32 "\n"
+              "  JobId:                  %" PRIu32 "\n"
               "  Job:                    %s\n"
               "  FileSet:                %s\n"
               "  Verify Level:           %s\n"
               "  Client:                 %s\n"
-               "  Verify JobId:           %" PRIu32 "\n"
+              "  Verify JobId:           %" PRIu32 "\n"
               "  Verify Job:             %s\n"
               "  Start time:             %s\n"
               "  End time:               %s\n"
               "  Files Expected:         %s\n"
               "  Files Examined:         %s\n"
-               "  Non-fatal FD errors:    %" PRIu32 "\n"
+              "  Non-fatal FD errors:    %" PRIu32 "\n"
               "  FD termination status:  %s\n"
               "  SD termination status:  %s\n"
               "  Bareos binary info:     %s\n"
@@ -540,17 +539,17 @@ void VerifyCleanup(JobControlRecord* jcr, int TermCode)
       Jmsg(jcr, msg_type, 0,
            T_("%s %s %s (%s):\n"
               "  Build:                  %s\n"
-               "  JobId:                  %" PRIu32 "\n"
+              "  JobId:                  %" PRIu32 "\n"
               "  Job:                    %s\n"
               "  FileSet:                %s\n"
               "  Verify Level:           %s\n"
               "  Client:                 %s\n"
-               "  Verify JobId:           %" PRIu32 "\n"
+              "  Verify JobId:           %" PRIu32 "\n"
               "  Verify Job:             %s\n"
               "  Start time:             %s\n"
               "  End time:               %s\n"
               "  Files Examined:         %s\n"
-               "  Non-fatal FD errors:    %" PRIu32 "\n"
+              "  Non-fatal FD errors:    %" PRIu32 "\n"
               "  FD termination status:  %s\n"
               "  Bareos binary info:     %s\n"
               "  Job triggered by:       %s\n"
@@ -606,7 +605,7 @@ void GetAttributesAndCompareToCatalog(JobControlRecord* jcr,
     fname = CheckPoolMemorySize(fname, fd->message_length);
     jcr->dir_impl->fname.check_size(fd->message_length);
     Dmsg1(200, "Atts+Digest=%s\n", fd->msg);
-    if ((len = sscanf(fd->msg, "%ld %d %100s", &file_index, &stream, fname))
+    if ((len = bsscanf(fd->msg, "%ld %d %100s", &file_index, &stream, fname))
         != 3) {
       Jmsg3(jcr, M_FATAL, 0,
             T_("dird<filed: bad attributes, expected 3 fields got %d\n"
@@ -698,8 +697,8 @@ void GetAttributesAndCompareToCatalog(JobControlRecord* jcr,
               if (statc.st_nlink != statf.st_nlink) {
                 PrtFname(jcr);
                 Jmsg(jcr, M_INFO, 0,
-                     T_("      st_nlink differ. Cat: %" PRIu32
-                        " File: %" PRIu32 "\n"),
+                     T_("      st_nlink differ. Cat: %" PRIu32 " File: %" PRIu32
+                        "\n"),
                      (uint32_t)statc.st_nlink, (uint32_t)statf.st_nlink);
                 jcr->setJobStatusWithPriorityCheck(JS_Differences);
               }
@@ -828,7 +827,8 @@ void GetAttributesAndCompareToCatalog(JobControlRecord* jcr,
   jcr->dir_impl->fn_printed = false;
   Mmsg(buf,
        "SELECT Path.Path,File.Name FROM File,Path "
-       "WHERE File.JobId=%" PRIu32 " AND File.FileIndex > 0 "
+       "WHERE File.JobId=%" PRIu32
+       " AND File.FileIndex > 0 "
        "AND File.MarkId!=%" PRIu32 " AND File.PathId=Path.PathId ",
        prev_jr->JobId, jcr->JobId);
   /* MissingHandler is called for each file found */

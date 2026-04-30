@@ -451,7 +451,7 @@ bool DoAppendData(JobControlRecord* jcr, BareosSocket* bs, const char* what)
     auto content = std::get<message_type>(std::move(msg).value());
     n = content.size;
 
-    if (sscanf(content.data.c_str(), "%ld %ld", &file_index, &stream) != 2) {
+    if (bsscanf(content.data.c_str(), "%ld %ld", &file_index, &stream) != 2) {
       Jmsg2(jcr, M_FATAL, 0, T_("Malformed data header from %s: %s\n"), what,
             content.data.c_str());
       ok = false;
@@ -549,8 +549,8 @@ bool DoAppendData(JobControlRecord* jcr, BareosSocket* bs, const char* what)
           = content2.data.addr(); /* use message buffer */
 
       Dmsg4(850,
-            "before writ_rec FI=%d SessId=%" PRIu32
-            " Strm=%s len=%" PRIu32 "\n",
+            "before writ_rec FI=%d SessId=%" PRIu32 " Strm=%s len=%" PRIu32
+            "\n",
             jcr->sd_impl->dcr->rec->FileIndex,
             jcr->sd_impl->dcr->rec->VolSessionId,
             stream_to_ascii(buf1, jcr->sd_impl->dcr->rec->Stream,

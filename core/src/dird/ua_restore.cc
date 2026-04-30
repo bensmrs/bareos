@@ -1013,24 +1013,24 @@ std::string CompensateShortDate(const char* cmd)
   tm datetime{};
   char trailinggarbage[16]{""};
 
-  if ((sscanf(cmd, "%u-%u-%u %u:%u:%u%15s", &datetime.tm_year, &datetime.tm_mon,
-              &datetime.tm_mday, &datetime.tm_hour, &datetime.tm_min,
-              &datetime.tm_sec, trailinggarbage)
+  if ((bsscanf(cmd, "%u-%u-%u %u:%u:%u%15s", &datetime.tm_year,
+               &datetime.tm_mon, &datetime.tm_mday, &datetime.tm_hour,
+               &datetime.tm_min, &datetime.tm_sec, trailinggarbage)
            == 7
-       || sscanf(cmd, "%u-%u-%u %u:%u%15s", &datetime.tm_year, &datetime.tm_mon,
-                 &datetime.tm_mday, &datetime.tm_hour, &datetime.tm_min,
-                 trailinggarbage)
+       || bsscanf(cmd, "%u-%u-%u %u:%u%15s", &datetime.tm_year,
+                  &datetime.tm_mon, &datetime.tm_mday, &datetime.tm_hour,
+                  &datetime.tm_min, trailinggarbage)
               == 6
-       || sscanf(cmd, "%u-%u-%u %u%15s", &datetime.tm_year, &datetime.tm_mon,
-                 &datetime.tm_mday, &datetime.tm_hour, trailinggarbage)
+       || bsscanf(cmd, "%u-%u-%u %u%15s", &datetime.tm_year, &datetime.tm_mon,
+                  &datetime.tm_mday, &datetime.tm_hour, trailinggarbage)
               == 5
-       || sscanf(cmd, "%u-%u-%u%15s", &datetime.tm_year, &datetime.tm_mon,
-                 &datetime.tm_mday, trailinggarbage)
+       || bsscanf(cmd, "%u-%u-%u%15s", &datetime.tm_year, &datetime.tm_mon,
+                  &datetime.tm_mday, trailinggarbage)
               == 4
-       || sscanf(cmd, "%u-%u%15s", &datetime.tm_year, &datetime.tm_mon,
-                 trailinggarbage)
+       || bsscanf(cmd, "%u-%u%15s", &datetime.tm_year, &datetime.tm_mon,
+                  trailinggarbage)
               == 3
-       || sscanf(cmd, "%u%s", &datetime.tm_year, trailinggarbage) == 2)
+       || bsscanf(cmd, "%u%s", &datetime.tm_year, trailinggarbage) == 2)
       && (trailinggarbage[0] == '\0')) {
     if (datetime.tm_mon == 0) { datetime.tm_mon = 1; }
     if (datetime.tm_mday == 0) { datetime.tm_mday = 1; }

@@ -470,7 +470,7 @@ bool SendSecureEraseReqToFd(JobControlRecord* jcr)
     while ((n = BgetDirmsg(fd)) >= 0) {
       jcr->dir_impl->FDSecureEraseCmd = CheckPoolMemorySize(
           jcr->dir_impl->FDSecureEraseCmd, fd->message_length);
-      if (sscanf(fd->msg, OKgetSecureEraseCmd, jcr->dir_impl->FDSecureEraseCmd)
+      if (bsscanf(fd->msg, OKgetSecureEraseCmd, jcr->dir_impl->FDSecureEraseCmd)
           == 1) {
         Dmsg1(400, "Got FD Secure Erase Cmd: %s\n",
               jcr->dir_impl->FDSecureEraseCmd);
@@ -869,7 +869,7 @@ int GetAttributesAndPutInCatalog(JobControlRecord* jcr)
     PoolMem Digest(PM_MESSAGE); /* Either Verify opts or MD5/SHA1 digest */
     Digest.check_size(fd->message_length);
     if ((len
-         = sscanf(fd->msg, "%ld %d %s", &file_index, &stream, Digest.c_str()))
+         = bsscanf(fd->msg, "%ld %d %s", &file_index, &stream, Digest.c_str()))
         != 3) {
       Jmsg(jcr, M_FATAL, 0,
            T_("<filed: bad attributes, expected 3 fields got %d\n"
@@ -892,8 +892,7 @@ int GetAttributesAndPutInCatalog(JobControlRecord* jcr)
         || stream == STREAM_UNIX_ATTRIBUTES_EX) {
       if (jcr->cached_attribute) {
         Dmsg3(debuglevel, "Cached attr. Stream=%" PRIu32 " fname=%s\n",
-              ar->Stream,
-              ar->fname);
+              ar->Stream, ar->fname);
         if (DbLocker _{jcr->db};
             !jcr->db->CreateFileAttributesRecord(jcr, ar)) {
           Jmsg1(jcr, M_FATAL, 0, T_("Attribute create error. %s"),
@@ -960,8 +959,8 @@ int GetAttributesAndPutInCatalog(JobControlRecord* jcr)
   }
 
   if (jcr->cached_attribute) {
-    Dmsg3(debuglevel, "Cached attr with digest. Stream=%" PRIu32
-                      " fname=%s attr=%s\n",
+    Dmsg3(debuglevel,
+          "Cached attr with digest. Stream=%" PRIu32 " fname=%s attr=%s\n",
           ar->Stream, ar->fname, ar->attr);
     if (DbLocker _{jcr->db}; !jcr->db->CreateFileAttributesRecord(jcr, ar)) {
       Jmsg1(jcr, M_FATAL, 0, T_("Attribute create error. %s"),

@@ -148,8 +148,8 @@ void CatalogRequest(JobControlRecord* jcr, BareosSocket* bs)
 
   // Find next appendable medium for SD
   unwanted_volumes.check_size(bs->message_length);
-  if (sscanf(bs->msg, Find_media, &Job, &index, &pool_name, &mr.MediaType,
-             unwanted_volumes.c_str())
+  if (bsscanf(bs->msg, Find_media, &Job, &index, &pool_name, &mr.MediaType,
+              unwanted_volumes.c_str())
       == 5) {
     PoolDbRecord pr;
     bstrncpy(pr.Name, pool_name, sizeof(pr.Name));
@@ -170,7 +170,7 @@ void CatalogRequest(JobControlRecord* jcr, BareosSocket* bs)
       bs->fsend(T_("1901 No Media.\n"));
       Dmsg0(500, "1901 No Media.\n");
     }
-  } else if (sscanf(bs->msg, Get_Vol_Info, &Job, &mr.VolumeName, &writing)
+  } else if (bsscanf(bs->msg, Get_Vol_Info, &Job, &mr.VolumeName, &writing)
              == 3) {
     // Request to find specific Volume information
     Dmsg1(100, "CatReq GetVolInfo Vol=%s\n", mr.VolumeName);
@@ -214,12 +214,12 @@ void CatalogRequest(JobControlRecord* jcr, BareosSocket* bs)
       bs->fsend(T_("1997 Volume \"%s\" not in catalog.\n"), mr.VolumeName);
       Dmsg1(100, "1997 Volume \"%s\" not in catalog.\n", mr.VolumeName);
     }
-  } else if (sscanf(bs->msg, Update_media, &Job, &sdmr.VolumeName,
-                    &sdmr.VolJobs, &sdmr.VolFiles, &sdmr.VolBlocks,
-                    &sdmr.VolBytes, &sdmr.VolMounts, &sdmr.VolErrors,
-                    &sdmr.VolWrites, &sdmr.MaxVolBytes, &VolLastWritten,
-                    &sdmr.VolStatus, &sdmr.Slot, &label, &sdmr.InChanger,
-                    &sdmr.VolReadTime, &sdmr.VolWriteTime, &VolFirstWritten)
+  } else if (bsscanf(bs->msg, Update_media, &Job, &sdmr.VolumeName,
+                     &sdmr.VolJobs, &sdmr.VolFiles, &sdmr.VolBlocks,
+                     &sdmr.VolBytes, &sdmr.VolMounts, &sdmr.VolErrors,
+                     &sdmr.VolWrites, &sdmr.MaxVolBytes, &VolLastWritten,
+                     &sdmr.VolStatus, &sdmr.Slot, &label, &sdmr.InChanger,
+                     &sdmr.VolReadTime, &sdmr.VolWriteTime, &VolFirstWritten)
              == 18) {
     /* Request to update Media record. Comes typically at the end
      * of a Storage daemon Job Session, when labeling/relabeling a
@@ -344,9 +344,9 @@ void CatalogRequest(JobControlRecord* jcr, BareosSocket* bs)
     Dmsg1(400, ">CatReq response: %s", bs->msg);
     Dmsg1(400, "Leave catreq jcr %p\n", jcr);
     return;
-  } else if (sscanf(bs->msg, Create_job_media, &Job, &jm.FirstIndex,
-                    &jm.LastIndex, &jm.StartFile, &jm.EndFile, &jm.StartBlock,
-                    &jm.EndBlock, &Copy, &Stripe, &MediaId)
+  } else if (bsscanf(bs->msg, Create_job_media, &Job, &jm.FirstIndex,
+                     &jm.LastIndex, &jm.StartFile, &jm.EndFile, &jm.StartBlock,
+                     &jm.EndBlock, &Copy, &Stripe, &MediaId)
              == 10) {
     // Request to create a JobMedia record
     if (jcr->dir_impl->mig_jcr) {
@@ -369,7 +369,7 @@ void CatalogRequest(JobControlRecord* jcr, BareosSocket* bs)
       Dmsg0(400, "JobMedia record created\n");
       bs->fsend(OK_create);
     }
-  } else if (sscanf(bs->msg, Update_filelist, &Job) == 1) {
+  } else if (bsscanf(bs->msg, Update_filelist, &Job) == 1) {
     Dmsg0(0, "Updating filelist\n");
 
     if (jcr->db_batch) {
@@ -384,8 +384,8 @@ void CatalogRequest(JobControlRecord* jcr, BareosSocket* bs)
             "No batch database connection exists, no files have been added to "
             "the batch (yet).\n");
     }
-  } else if (sscanf(bs->msg, Update_jobrecord, &Job, &update_jobfiles,
-                    &update_jobbytes)
+  } else if (bsscanf(bs->msg, Update_jobrecord, &Job, &update_jobfiles,
+                     &update_jobbytes)
              == 3) {
     Dmsg0(0, "Updating job record\n");
 
@@ -397,7 +397,7 @@ void CatalogRequest(JobControlRecord* jcr, BareosSocket* bs)
            jcr->db->strerror());
       bs->fsend(T_("1992 Update job record error\n"));
     }
-  } else if (sscanf(bs->msg, Delete_nulljobmediarecord, &Job, &jobid) == 2) {
+  } else if (bsscanf(bs->msg, Delete_nulljobmediarecord, &Job, &jobid) == 2) {
     int numrows = jcr->db->DeleteNullJobmediaRecords(jcr, jobid);
     Dmsg1(400, "Deleted %d rows.\n", numrows);
     if (numrows == -1) {

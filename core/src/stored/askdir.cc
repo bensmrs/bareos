@@ -119,14 +119,14 @@ static bool DoGetVolumeInfo(DeviceControlRecord* dcr)
   }
   VolumeCatalogInfo vol;
   Dmsg1(debuglevel, "<dird %s", dir->msg);
-  n = sscanf(dir->msg, OK_media, vol.VolCatName, &vol.VolCatJobs,
-             &vol.VolCatFiles, &vol.VolCatBlocks, &vol.VolCatBytes,
-             &vol.VolCatMounts, &vol.VolCatErrors, &vol.VolCatWrites,
-             &vol.VolCatMaxBytes, &vol.VolCatCapacityBytes, vol.VolCatStatus,
-             &vol.Slot, &vol.VolCatMaxJobs, &vol.VolCatMaxFiles, &InChanger,
-             &vol.VolReadTime, &vol.VolWriteTime, &vol.EndFile, &vol.EndBlock,
-             &vol.LabelType, &vol.VolMediaId, vol.VolEncrKey,
-             &vol.VolMinBlocksize, &vol.VolMaxBlocksize);
+  n = bsscanf(dir->msg, OK_media, vol.VolCatName, &vol.VolCatJobs,
+              &vol.VolCatFiles, &vol.VolCatBlocks, &vol.VolCatBytes,
+              &vol.VolCatMounts, &vol.VolCatErrors, &vol.VolCatWrites,
+              &vol.VolCatMaxBytes, &vol.VolCatCapacityBytes, vol.VolCatStatus,
+              &vol.Slot, &vol.VolCatMaxJobs, &vol.VolCatMaxFiles, &InChanger,
+              &vol.VolReadTime, &vol.VolWriteTime, &vol.EndFile, &vol.EndBlock,
+              &vol.LabelType, &vol.VolMediaId, vol.VolEncrKey,
+              &vol.VolMinBlocksize, &vol.VolMaxBlocksize);
   if (n != 24) {
     Dmsg3(debuglevel, "Bad response from Dir fields=%d, len=%d: %s", n,
           dir->message_length, dir->msg);

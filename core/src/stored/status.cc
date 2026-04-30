@@ -915,7 +915,7 @@ bool StatusCmd(JobControlRecord* jcr)
 
   sp.bs = dir;
   devicenames.check_size(dir->message_length);
-  if (sscanf(dir->msg, statuscmd, devicenames.c_str()) != 1) {
+  if (bsscanf(dir->msg, statuscmd, devicenames.c_str()) != 1) {
     PmStrcpy(jcr->errmsg, dir->msg);
     dir->fsend(T_("3900 No arg in status command: %s\n"), jcr->errmsg);
     dir->signal(BNET_EOD);
@@ -941,7 +941,7 @@ bool DotstatusCmd(JobControlRecord* jcr)
 
   sp.bs = dir;
   cmd.check_size(dir->message_length);
-  if (sscanf(dir->msg, dotstatuscmd, cmd.c_str()) != 1) {
+  if (bsscanf(dir->msg, dotstatuscmd, cmd.c_str()) != 1) {
     PmStrcpy(jcr->errmsg, dir->msg);
     dir->fsend(T_("3900 No arg in .status command: %s\n"), jcr->errmsg);
     dir->signal(BNET_EOD);

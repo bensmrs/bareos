@@ -688,8 +688,8 @@ int WaitForJobTermination(JobControlRecord* jcr, int timeout)
     // Wait for Client to terminate
     while ((n = BgetDirmsg(fd)) >= 0) {
       if (!fd_ok
-          && sscanf(fd->msg, EndJob, &jcr->dir_impl->FDJobStatus, &JobFiles,
-                    &ReadBytes, &JobBytes, &JobErrors, &VSS, &Encrypt)
+          && bsscanf(fd->msg, EndJob, &jcr->dir_impl->FDJobStatus, &JobFiles,
+                     &ReadBytes, &JobBytes, &JobErrors, &VSS, &Encrypt)
                  == 7) {
         fd_ok = true;
         jcr->setJobStatusWithPriorityCheck(jcr->dir_impl->FDJobStatus);

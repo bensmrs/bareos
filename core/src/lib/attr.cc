@@ -79,7 +79,7 @@ int UnpackAttributesRecord(JobControlRecord* jcr,
    * */
   attr->stream = stream;
   Dmsg1(debuglevel, "Attr: %s\n", rec);
-  if (sscanf(rec, "%d %d", &attr->file_index, &attr->type) != 2) {
+  if (bsscanf(rec, "%d %d", &attr->file_index, &attr->type) != 2) {
     Jmsg(jcr, M_FATAL, 0, T_("Error scanning attributes: %s\n"), rec);
     Dmsg1(debuglevel, "\nError scanning attributes. %s\n", rec);
     return 0;

@@ -446,9 +446,9 @@ static inline bool UnpackRestoreObject(JobControlRecord*,
   char* bp;
   uint32_t JobFiles;
 
-  if (sscanf(rec, "%d %d %d %d %d %d ", &JobFiles, &t_rop->Stream,
-             &t_rop->object_index, &t_rop->object_len, &t_rop->object_full_len,
-             &t_rop->object_compression)
+  if (bsscanf(rec, "%d %d %d %d %d %d ", &JobFiles, &t_rop->Stream,
+              &t_rop->object_index, &t_rop->object_len, &t_rop->object_full_len,
+              &t_rop->object_compression)
       != 6) {
     return false;
   }

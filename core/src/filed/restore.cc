@@ -461,8 +461,8 @@ void DoRestore(JobControlRecord* jcr)
     rctx.prev_stream = rctx.stream;
 
     // First we expect a Stream Record Header
-    if (sscanf(sd->msg, "rechdr %lu %lu %ld %ld %lu", &VolSessionId,
-               &VolSessionTime, &file_index, &rctx.full_stream, &rctx.size)
+    if (bsscanf(sd->msg, "rechdr %lu %lu %ld %ld %lu", &VolSessionId,
+                &VolSessionTime, &file_index, &rctx.full_stream, &rctx.size)
         != 5) {
       Jmsg1(jcr, M_FATAL, 0, T_("Record header scan error: %s\n"), sd->msg);
       goto bail_out;

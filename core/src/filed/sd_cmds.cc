@@ -52,7 +52,8 @@ void* handle_stored_connection(BareosSocket* sd)
     return NULL;
   }
 
-  if (sscanf(sd->msg, "Hello Storage calling Start Job %127s", job_name) != 1) {
+  if (bsscanf(sd->msg, "Hello Storage calling Start Job %127s", job_name)
+      != 1) {
     char addr[64];
     char* who = BnetGetPeer(sd, addr, sizeof(addr)) ? sd->who() : addr;
 

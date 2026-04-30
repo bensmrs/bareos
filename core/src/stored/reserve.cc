@@ -280,9 +280,9 @@ static bool UseDeviceCmd(JobControlRecord* jcr)
    * use_device for each device that it wants to use. */
   do {
     Dmsg1(debuglevel, "<dird: %s", dir->msg);
-    auto res
-        = sscanf(dir->msg, use_storage, StoreName.c_str(), media_type.c_str(),
-                 pool_name.c_str(), pool_type.c_str(), &append, &Copy, &Stripe);
+    auto res = bsscanf(dir->msg, use_storage, StoreName.c_str(),
+                       media_type.c_str(), pool_name.c_str(), pool_type.c_str(),
+                       &append, &Copy, &Stripe);
 
     if (res != 7) { ok = false; }
 
@@ -301,7 +301,7 @@ static bool UseDeviceCmd(JobControlRecord* jcr)
     // Now get all devices
     while (dir->recv() >= 0) {
       Dmsg1(debuglevel, "<dird device: %s", dir->msg);
-      ok = sscanf(dir->msg, use_device, dev_name.c_str()) == 1;
+      ok = bsscanf(dir->msg, use_device, dev_name.c_str()) == 1;
       if (!ok) { break; }
       UnbashSpaces(dev_name);
       storage.device_names.emplace_back(dev_name.c_str());
