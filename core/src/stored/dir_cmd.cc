@@ -101,7 +101,7 @@ inline constexpr const char releasecmd[] = "release %127s drive=%hd";
 inline constexpr const char readlabelcmd[]
     = "readlabel %127s Slot=%hd drive=%hd";
 inline constexpr const char replicatecmd[]
-    = "replicate JobId=%d Job=%127s address=%s port=%d ssl=%d "
+    = "replicate JobId=%lu Job=%127s address=%s port=%d ssl=%lu "
       "Authorization=%100s";
 inline constexpr const char passiveclientcmd[]
     = "passive client address=%s port=%d ssl=%d";
