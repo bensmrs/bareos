@@ -25,9 +25,9 @@
 namespace filedaemon {
 
 const std::string JobCommand::jobcmd_{
-    "JobId=%d Job=%127s SDid=%u SDtime=%u Authorization=%100s"};
+    "JobId=%lu Job=%127s SDid=%lu SDtime=%lu Authorization=%100s"};
 const std::string JobCommand::jobcmdssl_{
-    "JobId=%d Job=%127s SDid=%u SDtime=%u Authorization=%100s ssl=%d\n"};
+    "JobId=%lu Job=%127s SDid=%lu SDtime=%lu Authorization=%100s ssl=%lu\n"};
 
 JobCommand::JobCommand(const char* msg) : job_{0}, sd_auth_key_{0}
 {
