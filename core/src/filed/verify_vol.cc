@@ -289,7 +289,7 @@ ok_out:
 
   FreePoolMemory(fname);
   FreePoolMemory(lname);
-  Dmsg2(050, "End Verify-Vol. Files=%" PRIu32 "d Bytes=%" PRIu64 "\n",
+  Dmsg2(050, "End Verify-Vol. Files=%" PRIu32 " Bytes=%" PRIu64 "\n",
         jcr->JobFiles, jcr->JobBytes);
 }
 } /* namespace filedaemon */
