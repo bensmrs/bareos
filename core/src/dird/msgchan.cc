@@ -69,15 +69,15 @@ inline constexpr const char use_device[] = "use device=%s\n";
 /* Response from Storage daemon */
 inline constexpr const char OKbootstrap[] = "3000 OK bootstrap\n";
 inline constexpr const char OK_job[]
-    = "3000 OK Job SDid=%d SDtime=%d Authorization=%100s\n";
+    = "3000 OK Job SDid=%lu SDtime=%lu Authorization=%100s\n";
 inline constexpr const char OK_nextrun[] = "3000 OK Job Authorization=%100s\n";
 inline constexpr const char OK_device[] = "3000 OK use device device=%s\n";
 
 /* Storage Daemon requests */
 inline constexpr const char Job_start[] = "3010 Job %127s start\n";
 inline constexpr const char Job_end[]
-    = "3099 Job %127s end JobStatus=%d JobFiles=%d JobBytes=%lld "
-      "JobErrors=%u\n";
+    = "3099 Job %127s end JobStatus=%d JobFiles=%lu JobBytes=%llu "
+      "JobErrors=%lu\n";
 }  // namespace
 
 namespace directordaemon {
@@ -373,7 +373,7 @@ bool StartStorageDaemonJob(JobControlRecord* jcr, bool send_bsr)
     Dmsg1(100, "<stored: %s", sd_socket->msg);
     char auth_key[100];
     if (bsscanf(sd_socket->msg, OK_job, &jcr->VolSessionId,
-                &jcr->VolSessionTime, &auth_key)
+                &jcr->VolSessionTime, auth_key)
         != 3) {
       Dmsg1(100, "BadJob=%s\n", sd_socket->msg);
       Jmsg(jcr, M_FATAL, 0, T_("Storage daemon rejected Job command: %s\n"),
@@ -484,7 +484,7 @@ extern "C" void* msg_thread(void* arg)
     Dmsg1(400, "<stored: %s", sd->msg);
     /* Check for "3000 OK Job Authorization="
      * Returned by a rerun cmd. */
-    if (bsscanf(sd->msg, OK_nextrun, &auth_key) == 1) {
+    if (bsscanf(sd->msg, OK_nextrun, auth_key) == 1) {
       if (jcr->sd_auth_key) { free(jcr->sd_auth_key); }
       jcr->sd_auth_key = strdup(auth_key);
       pthread_cond_broadcast(
