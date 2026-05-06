@@ -55,6 +55,7 @@ sync_fs()
 
 cleanup_instances()
 {
+  echo "cleaning up ..." >&2
   incus rm -f "${INSTANCE}" 2>/dev/null || :
   incus rm -f "${NEWINSTANCE}" 2>/dev/null || :
 }
@@ -68,6 +69,7 @@ trap cleanup_instances EXIT
 
 cleanup_instances
 
+echo "creating ${INSTANCE} ..." >&2
 incus launch "${INCUS_VM_BASE_NAME}" "${INSTANCE}" --vm -c security.secureboot=false -d root,size=400MiB
 wait_for_agent "${INSTANCE}"
 incus file push - "${INSTANCE}/old-file" <<<"foobar"
@@ -107,6 +109,7 @@ if ((chunks != 25)); then
   exit 1
 fi
 
+echo "pushing new file to ${INSTANCE} ..." >&2
 incus file push - "${INSTANCE}/new-file" <<<"bazqux"
 sync_fs
 
@@ -140,6 +143,7 @@ if ((chunks > 8)); then
   exit 1
 fi
 
+echo "removing ${INSTANCE} ..." >&2
 incus rm -f "${INSTANCE}"
 
 cat <<END_OF_DATA >$tmp/bconcmds
@@ -157,6 +161,7 @@ END_OF_DATA
 run_bconsole "$@"
 check_log "${runner_tmp}/restore.out"
 
+echo "starting ${NEWINSTANCE} ..." >&2
 incus start "${NEWINSTANCE}"
 wait_for_agent "${NEWINSTANCE}"
 
@@ -169,6 +174,7 @@ else
   exit 1
 fi
 
+echo "removing ${NEWINSTANCE} ..." >&2
 incus rm -f "${NEWINSTANCE}"
 
 check_for_zombie_jobs storage=File
