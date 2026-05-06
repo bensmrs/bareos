@@ -24,4 +24,8 @@ runner_tmp="${tmp}/${runner_name}"
 mkdir -p "${runner_tmp}"
 rm -rf "${runner_tmp}"/*
 
-VMIMAGE=bareos-test-alpine
+INCUS_VM_BASE_NAME=@INCUS_VM_BASE_NAME@
+INCUS_CT_BASE_NAME=@INCUS_CT_BASE_NAME@
+
+INCUS_VM_NAME=@INCUS_VM_NAME@
+INCUS_CT_NAME=@INCUS_CT_NAME@

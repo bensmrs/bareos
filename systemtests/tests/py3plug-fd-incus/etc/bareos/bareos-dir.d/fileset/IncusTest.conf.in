@@ -9,7 +9,7 @@ FileSet {
    Plugin = "python"
         ":module_path=@python_plugin_module_src_test_dir@"
         ":module_name=bareos-fd-incus"
-        ":instance=bareos-test-vm"
+        ":instance=@INCUS_VM_NAME@"
         ":compression=lzma"
         ":chunk_size=16MiB"
   }
@@ -26,7 +26,7 @@ FileSet {
    Plugin = "python"
         ":module_path=@python_plugin_module_src_test_dir@"
         ":module_name=bareos-fd-incus"
-        ":instance=bareos-test-ct"
+        ":instance=@INCUS_CT_NAME@"
         ":compression=lzma"
   }
 }

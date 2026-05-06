@@ -53,6 +53,33 @@ if(Python3_VERSION VERSION_LESS "3.13")
 endif()
 
 if(INCUS)
+  set(INCUS_VM_BASE_NAME
+      "bareos-test-vm"
+      CACHE STRING "base vm image for the incus test"
+  )
+  set(INCUS_CT_BASE_NAME
+      "bareos-test-ct"
+      CACHE STRING "base container image for the incus test"
+  )
+
+  # incus only allows alphanumeric characters + hyphens in names
+  if(DEFINED CIUID)
+    string(REGEX REPLACE "[^A-Za-z0-9]" "-" INCUS_VM_NAME
+                         "${INCUS_VM_BASE_NAME}-${CIUID}"
+    )
+    string(REGEX REPLACE "[^A-Za-z0-9]" "-" INCUS_CT_NAME
+                         "${INCUS_CT_BASE_NAME}-${CIUID}"
+    )
+  else()
+    string(REGEX REPLACE "[^A-Za-z0-9]" "-" INCUS_VM_NAME
+                         "${INCUS_VM_BASE_NAME}"
+    )
+    string(REGEX REPLACE "[^A-Za-z0-9]" "-" INCUS_CT_NAME
+                         "${INCUS_CT_BASE_NAME}"
+    )
+  endif()
+
+  message("incus: using ${INCUS_VM_NAME} / ${INCUS_CT_NAME}")
   create_systemtest(${SYSTEMTEST_PREFIX} ${BASENAME} NO_GRPC)
 else()
   create_systemtest(

@@ -37,8 +37,8 @@ JobName=backup-incus-ct
 #shellcheck source=../../scripts/functions
 . "$BAREOS_SCRIPTS_DIR"/functions
 
-INSTANCE="bareos-test-ct${BUILDID:+-${BUILDID}}"
-NEWINSTANCE="${INSTANCE}-2"
+INSTANCE="${INCUS_CT_NAME}"
+NEWINSTANCE="${INSTANCE}-restored"
 
 wait_for_network()
 {
@@ -61,7 +61,7 @@ cleanup_instances()
 trap cleanup_instances EXIT
 
 cleanup_instances
-incus launch images:alpine/edge "$INSTANCE"
+incus launch "${INCUS_CT_BASE_NAME}" "$INSTANCE"
 wait_for_network "$INSTANCE"
 incus exec "$INSTANCE" apk add attr
 incus file push - "$INSTANCE/old-file" <<<foobar
