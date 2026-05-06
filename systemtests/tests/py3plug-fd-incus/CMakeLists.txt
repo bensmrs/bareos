@@ -53,7 +53,7 @@ if(Python3_VERSION VERSION_LESS "3.13")
 endif()
 
 if(INCUS)
-  create_systemtest(${SYSTEMTEST_PREFIX} ${BASENAME})
+  create_systemtest(${SYSTEMTEST_PREFIX} ${BASENAME} NO_GRPC)
 else()
   create_systemtest(
     ${SYSTEMTEST_PREFIX} ${BASENAME} DISABLED COMMENT "necessary tools missing"
