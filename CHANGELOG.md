@@ -39,6 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - core: remove one "unused" layer of abstraction from our tls code [PR #2631]
 - bvfs: fix cache race [PR #2642]
 - mssqlvdi: set default for serveraddress+instance on restore [PR #879]
+- docs: clarify mssql plugin options [PR #2653]
 
 ### Removed
 - dird: deprecate Pool->FileRetention, Pool->JobRetention, WriteVerifyList [PR #2567]
@@ -2287,4 +2288,5 @@ If you want to migrate from your manually configured disk autochanger to simply 
 [PR #2635]: https://github.com/bareos/bareos/pull/2635
 [PR #2638]: https://github.com/bareos/bareos/pull/2638
 [PR #2642]: https://github.com/bareos/bareos/pull/2642
+[PR #2653]: https://github.com/bareos/bareos/pull/2653
 [unreleased]: https://github.com/bareos/bareos/tree/master
