@@ -2,7 +2,7 @@
    BAREOS® - Backup Archiving REcovery Open Sourced
 
    Copyright (C) 2003-2012 Free Software Foundation Europe e.V.
-   Copyright (C) 2016-2024 Bareos GmbH & Co. KG
+   Copyright (C) 2016-2026 Bareos GmbH & Co. KG
 
    This program is Free Software; you can redistribute it and/or
    modify it under the terms of version three of the GNU Affero General Public
@@ -56,8 +56,7 @@ bool do_admin(JobControlRecord* jcr)
   jcr->dir_impl->jr.JobId = jcr->JobId;
 
   Jmsg(jcr, M_INFO, 0, T_("Start Admin JobId %" PRIu32 ", Job=%s\n"),
-       jcr->JobId,
-       jcr->Job);
+       jcr->JobId, jcr->Job);
 
   jcr->setJobStatusWithPriorityCheck(JS_Running);
   AdminCleanup(jcr, JS_Terminated);
@@ -108,7 +107,7 @@ void AdminCleanup(JobControlRecord* jcr, int TermCode)
 
   Jmsg(jcr, msg_type, 0,
        T_("BAREOS %s (%s): %s\n"
-           "  JobId:                  %" PRIu32 "\n"
+          "  JobId:                  %" PRIu32 "\n"
           "  Job:                    %s\n"
           "  Scheduled time:         %s\n"
           "  Start time:             %s\n"

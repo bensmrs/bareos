@@ -210,8 +210,7 @@ bRC GeneratePluginEvent(JobControlRecord* jcr,
   event.eventType = eventType;
 
   Dmsg2(debuglevel, "dir-plugin_ctx_list=%p JobId=%" PRIu32 "\n",
-        plugin_ctx_list,
-        jcr->JobId);
+        plugin_ctx_list, jcr->JobId);
 
   // See if we need to trigger the loaded plugins in reverse order.
   if (reverse) {
@@ -333,8 +332,8 @@ static bool IsPluginCompatible(Plugin* plugin)
          plugin->file, static_cast<uint32_t>(DIR_PLUGIN_INTERFACE_VERSION),
          info->version);
     Dmsg3(50,
-          "Plugin version incorrect. Plugin=%s wanted=%" PRIu32
-          " got=%" PRIu32 "\n",
+          "Plugin version incorrect. Plugin=%s wanted=%" PRIu32 " got=%" PRIu32
+          "\n",
           plugin->file, static_cast<uint32_t>(DIR_PLUGIN_INTERFACE_VERSION),
           info->version);
     return false;

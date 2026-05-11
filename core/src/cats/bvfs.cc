@@ -156,7 +156,8 @@ bool BareosDb::UpdatePathHierarchyCache(JobControlRecord* jcr,
             static_cast<uint32_t>(JobId));
       retval = true;
     } else {
-      Dmsg1(dbglevel, "already in progress %" PRIu32 "\n", static_cast<uint32_t>(JobId));
+      Dmsg1(dbglevel, "already in progress %" PRIu32 "\n",
+            static_cast<uint32_t>(JobId));
       retval = false;
     }
     goto bail_out;

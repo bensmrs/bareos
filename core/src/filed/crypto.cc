@@ -288,10 +288,10 @@ again:
                             (uint8_t*)&cipher_ctx->buf[cipher_ctx->buf_len],
                             &decrypted_len)) {
     // Writing out the final, buffered block failed. Shouldn't happen.
-      Jmsg3(jcr, M_ERROR, 0,
-            T_("Decryption error. buf_len=%d decrypt_len=%" PRIu32
-               " on file %s\n"),
-            cipher_ctx->buf_len, decrypted_len, jcr->fd_impl->last_fname);
+    Jmsg3(
+        jcr, M_ERROR, 0,
+        T_("Decryption error. buf_len=%d decrypt_len=%" PRIu32 " on file %s\n"),
+        cipher_ctx->buf_len, decrypted_len, jcr->fd_impl->last_fname);
   }
 
   Dmsg2(130, "Flush decrypt len=%" PRIu32 " buf_len=%d\n", decrypted_len,
@@ -495,8 +495,7 @@ bool EncryptData(b_ctx* bctx, bool* need_more_data)
     }
 
     Dmsg2(400, "encrypted len=%" PRIu32 " unencrypted len=%d\n",
-          bctx->encrypted_len,
-          bctx->jcr->store_bsock->message_length);
+          bctx->encrypted_len, bctx->jcr->store_bsock->message_length);
 
     bctx->jcr->store_bsock->message_length
         = initial_len + bctx->encrypted_len; /* set encrypted length */
@@ -546,8 +545,7 @@ bool DecryptData(JobControlRecord* jcr,
   }
 
   Dmsg2(200, "decrypted len=%" PRIu32 " encrypted len=%" PRIu32 "\n",
-        decrypted_len,
-        *length);
+        decrypted_len, *length);
 
   cipher_ctx->buf_len += decrypted_len;
   *data = cipher_ctx->buf;

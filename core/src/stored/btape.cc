@@ -892,8 +892,9 @@ static bool SpeedTestRaw(fill_mode_t mode, uint64_t nb_gb, uint32_t nb)
   init_total_speed();
   FillBuffer(mode, block->buf, block->buf_len);
 
-  Pmsg3(0, T_("Begin writing %" PRIu32
-              " files of %sB with raw blocks of %u bytes.\n"),
+  Pmsg3(0,
+        T_("Begin writing %" PRIu32
+           " files of %sB with raw blocks of %u bytes.\n"),
         nb, edit_uint64_with_suffix(nb_gb, ed1), block->buf_len);
 
   for (uint32_t j = 0; j < nb; j++) {
@@ -1220,8 +1221,8 @@ static bool write_read_test()
     for (uint32_t j = 0; j < len; j++) {
       if (*p != i) {
         Pmsg3(0,
-              T_("Bad data in record. Expected %" PRIu32
-                 ", got %" PRIu32 " at byte %" PRIu32 ". Test "
+              T_("Bad data in record. Expected %" PRIu32 ", got %" PRIu32
+                 " at byte %" PRIu32 ". Test "
                  "failed!\n"),
               i, *p, j);
         goto bail_out;
@@ -1925,12 +1926,10 @@ static void scancmd()
       if (blocks > 0) {
         if (blocks == 1) {
           printf(T_("1 block of %" PRIu32 " bytes in file %" PRIu32 "\n"),
-                 static_cast<uint32_t>(block_size),
-                 g_dev->file);
+                 static_cast<uint32_t>(block_size), g_dev->file);
         } else {
           printf(T_("%d blocks of %" PRIu32 " bytes in file %" PRIu32 "\n"),
-                 blocks, static_cast<uint32_t>(block_size),
-                 g_dev->file);
+                 blocks, static_cast<uint32_t>(block_size), g_dev->file);
         }
       }
       return;
@@ -1942,12 +1941,10 @@ static void scancmd()
       if (blocks > 0) {
         if (blocks == 1) {
           printf(T_("1 block of %" PRIu32 " bytes in file %" PRIu32 "\n"),
-                 static_cast<uint32_t>(block_size),
-                 g_dev->file);
+                 static_cast<uint32_t>(block_size), g_dev->file);
         } else {
           printf(T_("%d blocks of %" PRIu32 " bytes in file %" PRIu32 "\n"),
-                 blocks, static_cast<uint32_t>(block_size),
-                 g_dev->file);
+                 blocks, static_cast<uint32_t>(block_size), g_dev->file);
         }
         blocks = 0;
       }
@@ -2011,13 +2008,10 @@ static void scan_blocks()
         if (blocks > 0) {
           if (blocks == 1) {
             printf(T_("1 block of %" PRIu32 " bytes in file %" PRIu32 "\n"),
-                   block_size,
-                   g_dev->file);
+                   block_size, g_dev->file);
           } else {
             printf(T_("%d blocks of %" PRIu32 " bytes in file %" PRIu32 "\n"),
-                   blocks,
-                   block_size,
-                   g_dev->file);
+                   blocks, block_size, g_dev->file);
           }
           blocks = 0;
         }
@@ -2026,12 +2020,10 @@ static void scan_blocks()
         if (blocks > 0) {
           if (blocks == 1) {
             printf(T_("1 block of %" PRIu32 " bytes in file %" PRIu32 "\n"),
-                   block_size,
-                   g_dev->file);
+                   block_size, g_dev->file);
           } else {
             printf(T_("%d blocks of %" PRIu32 " bytes in file %" PRIu32 "\n"),
-                   blocks, block_size,
-                   g_dev->file);
+                   blocks, block_size, g_dev->file);
           }
           blocks = 0;
         }
@@ -2043,12 +2035,10 @@ static void scan_blocks()
           if (blocks > 0) {
             if (blocks == 1) {
               printf(T_("1 block of %" PRIu32 " bytes in file %" PRIu32 "\n"),
-                     block_size,
-                     g_dev->file);
+                     block_size, g_dev->file);
             } else {
               printf(T_("%d blocks of %" PRIu32 " bytes in file %" PRIu32 "\n"),
-                     blocks,
-                     block_size, g_dev->file);
+                     blocks, block_size, g_dev->file);
             }
             blocks = 0;
           }
@@ -2062,13 +2052,10 @@ static void scan_blocks()
       if (blocks > 0) {
         if (blocks == 1) {
           printf(T_("1 block of %" PRIu32 " bytes in file %" PRIu32 "\n"),
-                 block_size,
-                 g_dev->file);
+                 block_size, g_dev->file);
         } else {
           printf(T_("%d blocks of %" PRIu32 " bytes in file %" PRIu32 "\n"),
-                 blocks,
-                 block_size,
-                 g_dev->file);
+                 blocks, block_size, g_dev->file);
         }
         blocks = 0;
       }
@@ -2249,8 +2236,7 @@ static void fillcmd()
     while (!WriteRecordToBlock(g_dcr, &rec)) {
       // When we get here we have just filled a block
       Dmsg2(150, "!WriteRecordToBlock data_len=%" PRIu32 " rem=%" PRIu32 "\n",
-            rec.data_len,
-            rec.remainder);
+            rec.data_len, rec.remainder);
 
       /* Write block to tape */
       if (!FlushBlock(block)) {
@@ -2349,8 +2335,9 @@ static void fillcmd()
     write_with_check(fd, last_block2->buf, last_block2->buf_len);
     write_with_check(fd, first_block->buf, first_block->buf_len);
     close(fd);
-    Pmsg2(0, T_("Wrote state file last_block_num1=%" PRIu32
-                " last_block_num2=%" PRIu32 "\n"),
+    Pmsg2(0,
+          T_("Wrote state file last_block_num1=%" PRIu32
+             " last_block_num2=%" PRIu32 "\n"),
           last_block_num1, last_block_num2);
   } else {
     BErrNo be;
@@ -2630,8 +2617,7 @@ static bool QuickieCb(DeviceControlRecord* t_dcr, DeviceRecord*)
   quickie_count++;
   if (quickie_count == 10'000) {
     Pmsg2(-1, T_("10'000 records read now at %" PRIu32 ":%" PRIu32 "\n"),
-          dev->file,
-          dev->block_num);
+          dev->file, dev->block_num);
   }
   return quickie_count < 10'000;
 }
@@ -2695,8 +2681,7 @@ static int FlushBlock(DeviceBlock* block)
   this_block_num = g_dev->block_num;
   if (!g_dcr->WriteBlockToDev()) {
     Pmsg3(000, T_("Last block at: %u:%u this_dev_block_num=%" PRIu32 "\n"),
-          last_file,
-          last_block_num, this_block_num);
+          last_file, last_block_num, this_block_num);
     if (vol_num == 1) {
       /* This is 1st tape, so save first tape info separate
        *  from second tape info */

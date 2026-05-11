@@ -524,8 +524,7 @@ bRC GeneratePluginEvent(JobControlRecord* jcr,
   event.eventType = eventType;
 
   Dmsg2(debuglevel, "plugin_ctx=%p JobId=%" PRIu32 " event=%d\n",
-        plugin_ctx_list,
-        jcr->JobId, eventType);
+        plugin_ctx_list, jcr->JobId, eventType);
 
   /* Pass event to every plugin that has requested this event type (except if
    * name is set). If name is set, we pass it only to the plugin with that name.
@@ -593,8 +592,7 @@ bool PluginCheckFile(JobControlRecord* jcr, char* fname)
   }
 
   plugin_ctx_list = jcr->plugin_ctx_list;
-  Dmsg2(debuglevel, "plugin_ctx=%p JobId=%" PRIu32 "\n",
-        jcr->plugin_ctx_list,
+  Dmsg2(debuglevel, "plugin_ctx=%p JobId=%" PRIu32 "\n", jcr->plugin_ctx_list,
         jcr->JobId);
 
   // Pass event to every plugin
@@ -1839,12 +1837,10 @@ static bool IsPluginCompatible(Plugin* plugin)
   }
   if (info->version != FD_PLUGIN_INTERFACE_VERSION) {
     Jmsg(NULL, M_ERROR, 0,
-         T_("Plugin version incorrect. Plugin=%s wanted=%u got=%" PRIu32
-            "\n"),
+         T_("Plugin version incorrect. Plugin=%s wanted=%u got=%" PRIu32 "\n"),
          plugin->file, static_cast<unsigned int>(FD_PLUGIN_INTERFACE_VERSION),
          info->version);
-    Dmsg3(50, "Plugin version incorrect. Plugin=%s wanted=%u got=%" PRIu32
-              "\n",
+    Dmsg3(50, "Plugin version incorrect. Plugin=%s wanted=%u got=%" PRIu32 "\n",
           plugin->file, static_cast<unsigned int>(FD_PLUGIN_INTERFACE_VERSION),
           info->version);
     return false;

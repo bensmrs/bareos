@@ -390,8 +390,7 @@ bool DoNativeRestore(JobControlRecord* jcr)
   }
   Dmsg0(20, "Updated job start record\n");
 
-  Dmsg1(20, "RestoreJobId=%" PRIu32 "\n",
-        jcr->dir_impl->res.job->RestoreJobId);
+  Dmsg1(20, "RestoreJobId=%" PRIu32 "\n", jcr->dir_impl->res.job->RestoreJobId);
 
   if (!jcr->RestoreBootstrap) {
     Jmsg(jcr, M_FATAL, 0,
@@ -525,7 +524,7 @@ void GenerateRestoreSummary(JobControlRecord* jcr,
       Jmsg(jcr, msg_type, 0,
            T_("%s %s %s (%s):\n"
               "  OS Information:         %s\n"
-               "  JobId:                  %" PRIu32 "\n"
+              "  JobId:                  %" PRIu32 "\n"
               "  Job:                    %s\n"
               "  Restore Client:         \"%s\" %s\n"
               "  Start time:             %s\n"
@@ -570,7 +569,7 @@ void GenerateRestoreSummary(JobControlRecord* jcr,
       Jmsg(jcr, msg_type, 0,
            T_("%s %s %s (%s):\n"
               "  OS Information:         %s\n"
-               "  JobId:                  %" PRIu32 "\n"
+              "  JobId:                  %" PRIu32 "\n"
               "  Job:                    %s\n"
               "  Restore Client:         \"%s\" %s\n"
               "  Start time:             %s\n"
@@ -580,7 +579,7 @@ void GenerateRestoreSummary(JobControlRecord* jcr,
               "  Files Restored:         %s\n"
               "  Bytes Restored:         %s\n"
               "  Rate:                   %.1f KB/s\n"
-               "  FD Errors:              %" PRIu32 "\n"
+              "  FD Errors:              %" PRIu32 "\n"
               "  FD termination status:  %s\n"
               "  SD termination status:  %s\n"
               "%s"

@@ -309,8 +309,7 @@ static bool WriteVolumeLabelToBlock(DeviceControlRecord* dcr)
     return false;
   } else {
     Dmsg2(130, "Wrote label of %" PRIu32 " bytes to block. Vol=%s\n",
-          rec.data_len,
-          dcr->VolumeName);
+          rec.data_len, dcr->VolumeName);
   }
   FreePoolMemory(rec.data);
   return true;
@@ -653,8 +652,7 @@ bool WriteSessionLabel(DeviceControlRecord* dcr, int label)
 
   Dmsg6(150,
         "Write sesson_label record JobId=%" PRIu32 " FI=%s SessId=%" PRIu32
-        " Strm=%s len=%" PRIu32
-        " remainder=%" PRIu32 "\n",
+        " Strm=%s len=%" PRIu32 " remainder=%" PRIu32 "\n",
         jcr->JobId, FI_to_ascii(buf1, rec->FileIndex), rec->VolSessionId,
         stream_to_ascii(buf2, rec->Stream, rec->FileIndex), rec->data_len,
         rec->remainder);
@@ -808,13 +806,13 @@ void DumpVolumeLabel(Device* dev)
   Pmsg11(-1,
          T_("\nVolume Label:\n"
             "Id                : %s"
-             "VerNo             : %" PRIu32 "\n"
-             "VolName           : %s\n"
-             "PrevVolName       : %s\n"
-             "VolFile           : %" PRIu32 "\n"
-             "LabelType         : %s\n"
-             "LabelSize         : %" PRIu32 "\n"
-             "PoolName          : %s\n"
+            "VerNo             : %" PRIu32 "\n"
+            "VolName           : %s\n"
+            "PrevVolName       : %s\n"
+            "VolFile           : %" PRIu32 "\n"
+            "LabelType         : %s\n"
+            "LabelSize         : %" PRIu32 "\n"
+            "PoolName          : %s\n"
             "MediaType         : %s\n"
             "PoolType          : %s\n"
             "HostName          : %s\n"
@@ -844,10 +842,10 @@ static void DumpSessionLabel(DeviceRecord* rec, const char* type)
   dbl = debug_level;
   debug_level = 1;
   Pmsg7(-1,
-           T_("\n%s Record:\n"
-              "JobId             : %" PRIu32 "\n"
-              "VerNum            : %" PRIu32 "\n"
-              "PoolName          : %s\n"
+        T_("\n%s Record:\n"
+           "JobId             : %" PRIu32 "\n"
+           "VerNum            : %" PRIu32 "\n"
+           "PoolName          : %s\n"
            "PoolType          : %s\n"
            "JobName           : %s\n"
            "ClientName        : %s\n"
@@ -862,8 +860,8 @@ static void DumpSessionLabel(DeviceRecord* rec, const char* type)
              "JobType           : %c\n"
              "JobLevel          : %c\n"
              ""),
-           label.Job, label.FileSetName, static_cast<int>(label.JobType),
-           static_cast<int>(label.JobLevel));
+          label.Job, label.FileSetName, static_cast<int>(label.JobType),
+          static_cast<int>(label.JobLevel));
   }
 
   if (rec->FileIndex == EOS_LABEL) {
@@ -944,20 +942,20 @@ void DumpLabelRecord(Device* dev, DeviceRecord* rec, bool verbose)
         break;
       case EOM_LABEL:
         Pmsg7(-1,
-               T_("%s Record: File:blk=%u:%u SessId=%" PRIu32
-                  " SessTime=%" PRIu32 " JobId=%d DataLen=%" PRIu32 "\n"),
-               type, dev->file, dev->block_num, rec->VolSessionId,
-               rec->VolSessionTime, rec->Stream, rec->data_len);
+              T_("%s Record: File:blk=%u:%u SessId=%" PRIu32
+                 " SessTime=%" PRIu32 " JobId=%d DataLen=%" PRIu32 "\n"),
+              type, dev->file, dev->block_num, rec->VolSessionId,
+              rec->VolSessionTime, rec->Stream, rec->data_len);
         break;
       case EOT_LABEL:
         Pmsg0(-1, T_("End of physical tape.\n"));
         break;
       default:
         Pmsg7(-1,
-               T_("%s Record: File:blk=%u:%u SessId=%" PRIu32
-                  " SessTime=%" PRIu32 " JobId=%d DataLen=%" PRIu32 "\n"),
-               type, dev->file, dev->block_num, rec->VolSessionId,
-               rec->VolSessionTime, rec->Stream, rec->data_len);
+              T_("%s Record: File:blk=%u:%u SessId=%" PRIu32
+                 " SessTime=%" PRIu32 " JobId=%d DataLen=%" PRIu32 "\n"),
+              type, dev->file, dev->block_num, rec->VolSessionId,
+              rec->VolSessionTime, rec->Stream, rec->data_len);
         break;
     }
   } else {
@@ -969,7 +967,7 @@ void DumpLabelRecord(Device* dev, DeviceRecord* rec, bool verbose)
         bstrftimes(dt, sizeof(dt), BtimeToUtime(label.write_btime));
         Pmsg6(-1,
               T_("%s Record: File:blk=%u:%u SessId=%" PRIu32
-                  " SessTime=%" PRIu32 " JobId=%" PRIu32 "\n"),
+                 " SessTime=%" PRIu32 " JobId=%" PRIu32 "\n"),
               type, dev->file, dev->block_num, rec->VolSessionId,
               rec->VolSessionTime, label.JobId);
         Pmsg4(-1, T_("   Job=%s Date=%s Level=%c Type=%c\n"), label.Job, dt,
@@ -982,18 +980,17 @@ void DumpLabelRecord(Device* dev, DeviceRecord* rec, bool verbose)
         bstrftimes(dt, sizeof(dt), BtimeToUtime(label.write_btime));
         Pmsg6(-1,
               T_("%s Record: File:blk=%u:%u SessId=%" PRIu32
-                  " SessTime=%" PRIu32 " JobId=%" PRIu32 "\n"),
+                 " SessTime=%" PRIu32 " JobId=%" PRIu32 "\n"),
               type, dev->file, dev->block_num, rec->VolSessionId,
               rec->VolSessionTime, label.JobId);
-        Pmsg7(
-            -1,
-             T_("   Job=%s Date=%s Level=%c Type=%c Files=%s Bytes=%s Errors=%"
-                PRIu32 " Status=%c\n"),
-            label.Job, dt, static_cast<int>(label.JobLevel),
-            static_cast<int>(label.JobType),
-            edit_uint64_with_commas(label.JobFiles, ed1),
-            edit_uint64_with_commas(label.JobBytes, ed2), label.JobErrors,
-            static_cast<int>(label.JobStatus));
+        Pmsg7(-1,
+              T_("   Job=%s Date=%s Level=%c Type=%c Files=%s Bytes=%s "
+                 "Errors=%" PRIu32 " Status=%c\n"),
+              label.Job, dt, static_cast<int>(label.JobLevel),
+              static_cast<int>(label.JobType),
+              edit_uint64_with_commas(label.JobFiles, ed1),
+              edit_uint64_with_commas(label.JobBytes, ed2), label.JobErrors,
+              static_cast<int>(label.JobStatus));
         break;
       case EOM_LABEL:
       case PRE_LABEL:

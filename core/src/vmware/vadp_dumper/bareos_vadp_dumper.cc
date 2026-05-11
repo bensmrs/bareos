@@ -1121,7 +1121,8 @@ static inline bool process_meta_data(bool validate_only)
 
     key = (char*)malloc(rmde.meta_key_length);
     if (!key) {
-      fprintf(stderr, "Failed to allocate %" PRIu32 " bytes for meta data key\n",
+      fprintf(stderr,
+              "Failed to allocate %" PRIu32 " bytes for meta data key\n",
               rmde.meta_key_length);
       goto bail_out;
     }

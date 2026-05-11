@@ -1714,8 +1714,7 @@ bool EncodeAndSendAttributes(JobControlRecord* jcr,
 
       sd->message_length = Mmsg(
           sd->msg, "%" PRIu32 " %d %d %d %d %d %s%c%s%c", jcr->JobFiles,
-          ff_pkt->type,
-          ff_pkt->object_index, comp_len, ff_pkt->object_len,
+          ff_pkt->type, ff_pkt->object_index, comp_len, ff_pkt->object_len,
           ff_pkt->object_compression, ff_pkt->fname, 0, ff_pkt->object_name, 0);
       sd->msg = CheckPoolMemorySize(sd->msg, sd->message_length + comp_len + 2);
       memcpy(sd->msg + sd->message_length, ff_pkt->object, comp_len);

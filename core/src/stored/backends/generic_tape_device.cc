@@ -636,8 +636,7 @@ bool generic_tape_device::fsr(int num)
     Dmsg1(100, "FSF fail: ERR=%s\n", be.bstrerror());
     if (DevGetOsPos(this, &mt_stat)) {
       Dmsg4(100, "Adjust from %" PRIu32 ":%" PRIu32 " to %d:%d\n", file,
-            block_num,
-            mt_stat.mt_fileno, mt_stat.mt_blkno);
+            block_num, mt_stat.mt_fileno, mt_stat.mt_blkno);
       file = mt_stat.mt_fileno;
       block_num = mt_stat.mt_blkno;
     } else {

@@ -3,7 +3,7 @@
 
    Copyright (C) 2002-2012 Free Software Foundation Europe e.V.
    Copyright (C) 2011-2012 Planets Communications B.V.
-   Copyright (C) 2013-2025 Bareos GmbH & Co. KG
+   Copyright (C) 2013-2026 Bareos GmbH & Co. KG
 
    This program is Free Software; you can redistribute it and/or
    modify it under the terms of version three of the GNU Affero General Public
@@ -622,9 +622,9 @@ bool DeviceControlRecord::is_eod_valid()
        * that the database says we should be. */
       if (dev->VolCatInfo.VolCatFiles == dev->GetFile()) {
         Jmsg(jcr, M_INFO, 0,
-              T_("Ready to append to end of Volume \"%s\" at file=%" PRIu32
-                 ".\n"),
-              VolumeName, dev->GetFile());
+             T_("Ready to append to end of Volume \"%s\" at file=%" PRIu32
+                ".\n"),
+             VolumeName, dev->GetFile());
       } else if (dev->GetFile() > dev->VolCatInfo.VolCatFiles) {
         Jmsg(jcr, M_WARNING, 0,
              T_("For Volume \"%s\":\n"
@@ -849,8 +849,8 @@ bool DeviceControlRecord::IsTapePositionOk()
     if (file >= 0 && file != (int32_t)dev->GetFile()) {
       Jmsg(jcr, M_ERROR, 0,
            T_("Invalid tape position on volume \"%s\""
-               " on device %s. Expected %" PRIu32 ", got %d\n"),
-            dev->VolHdr.VolumeName, dev->print_name(), dev->GetFile(), file);
+              " on device %s. Expected %" PRIu32 ", got %d\n"),
+           dev->VolHdr.VolumeName, dev->print_name(), dev->GetFile(), file);
       /* If the current file is greater than zero, it means we probably
        *  have some bad count of EOF marks, so mark tape in error.  Otherwise
        *  the operator might have moved the tape, so we just release it

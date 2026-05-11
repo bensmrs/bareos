@@ -110,8 +110,8 @@ void DumpBlock(DeviceBlock* b, const char* msg)
     unser_int32(Stream);
     unser_uint32(data_len);
     Pmsg6(000,
-          T_("   Rec: VId=%" PRIu32 " VT=%" PRIu32
-             " FI=%s Strm=%s len=%" PRIu32 " p=%p\n"),
+          T_("   Rec: VId=%" PRIu32 " VT=%" PRIu32 " FI=%s Strm=%s len=%" PRIu32
+             " p=%p\n"),
           VolSessionId, VolSessionTime, FI_to_ascii(buf1, FileIndex),
           stream_to_ascii(buf2, Stream, FileIndex), data_len, p);
     p += data_len + rhl;
@@ -138,8 +138,8 @@ DeviceBlock* new_block(Device* dev)
           block->buf_len);
   } else {
     block->buf_len = dev->max_block_size;
-    Dmsg1(100, "created new block of blocksize %" PRIu32
-               " (dev->max_block_size)\n",
+    Dmsg1(100,
+          "created new block of blocksize %" PRIu32 " (dev->max_block_size)\n",
           block->buf_len);
   }
   block->dev = dev;
@@ -333,8 +333,7 @@ static inline bool unSerBlockHeader(JobControlRecord* jcr,
   block->block_len = block_len;
   block->BlockNumber = BlockNumber;
   Dmsg3(390, "Read binbuf = %" PRIu32 " %d block_len=%" PRIu32 "\n",
-        block->binbuf, bhl,
-        block_len);
+        block->binbuf, bhl, block_len);
   if (block_len <= block->read_len && dev->DoChecksum()) {
     BlockCheckSum = crc32_fast((uint8_t*)block->buf + BLKHDR_CS_LENGTH,
                                block_len - BLKHDR_CS_LENGTH);
@@ -789,8 +788,9 @@ bool DeviceControlRecord::WriteBlockToDev()
 
       be.SetErrno(dev->dev_errno);
       Dmsg7(100,
-            "=== Write error. fd=%d size=%u rtn=%" PRIiz
-            " dev_blk=%" PRIu32 " blk_blk=%" PRIu32 " "
+            "=== Write error. fd=%d size=%u rtn=%" PRIiz " dev_blk=%" PRIu32
+            " blk_blk=%" PRIu32
+            " "
             "errno=%d: ERR=%s\n",
             dev->fd, wlen, status, dev->block_num, block->BlockNumber,
             dev->dev_errno, be.bstrerror(dev->dev_errno));
@@ -1182,14 +1182,12 @@ reread:
     pos -= (block->read_len - block->block_len);
     dev->d_lseek(dcr, pos, SEEK_SET);
     Dmsg3(250, "Did lseek pos=%s blk_size=%" PRIu32 " rdlen=%" PRIu32 "\n",
-          edit_int64(pos, ed1),
-          block->block_len, block->read_len);
+          edit_int64(pos, ed1), block->block_len, block->read_len);
     dev->file_addr = pos;
     dev->file_size = pos;
   }
   Dmsg2(250, "Exit read_block read_len=%" PRIu32 " block_len=%" PRIu32 "\n",
-        block->read_len,
-        block->block_len);
+        block->read_len, block->block_len);
   block->block_read = true;
   return ReadStatus::Ok;
 }

@@ -858,8 +858,7 @@ static inline bool SetbwlimitFiled(UaContext* ua,
 
   // Try to connect for 15 seconds
   ua->SendMsg(T_("Connecting to Client %s at %s:%" PRIu32 "\n"),
-              client->resource_name_,
-              client->address, client->FDport);
+              client->resource_name_, client->address, client->FDport);
 
   if (!ConnectToFileDaemon(ua->jcr, 1, 15, false)) {
     ua->ErrorMsg(T_("Failed to connect to Client.\n"));
@@ -1195,8 +1194,7 @@ static void DoClientSetdebug(UaContext* ua,
 
   // Try to connect for 15 seconds
   ua->SendMsg(T_("Connecting to Client %s at %s:%" PRIu32 "\n"),
-              client->resource_name_,
-              client->address, client->FDport);
+              client->resource_name_, client->address, client->FDport);
 
   if (!ConnectToFileDaemon(ua->jcr, 1, 15, false)) {
     ua->ErrorMsg(T_("Failed to connect to Client.\n"));

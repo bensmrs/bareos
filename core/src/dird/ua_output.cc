@@ -350,8 +350,8 @@ static int GetJobidFromCmdline(UaContext* ua)
           jr.Job);
   } else if (const char* jobid = GetArgValue(ua, NT_("jobid"))) {
     jr.JobId = str_to_int64(jobid);
-    Dmsg1(200, "GetJobidFromCmdline: Selecting jobid %" PRIu32
-               " from cmdline.\n",
+    Dmsg1(200,
+          "GetJobidFromCmdline: Selecting jobid %" PRIu32 " from cmdline.\n",
           jr.JobId);
   } else {
     Dmsg0(200, "GetJobidFromCmdline: No jobid specified on cmdline.\n");
@@ -375,11 +375,10 @@ static int GetJobidFromCmdline(UaContext* ua)
     ClientDbRecord cr{};
     cr.ClientId = jr.ClientId;
     if (!ua->db->GetClientRecord(ua->jcr, &cr)) {
-      Dmsg1(
-          200,
-          "GetJobidFromCmdline: Failed to get client record for ClientId %"
-          PRIdbid "\n",
-          jr.ClientId);
+      Dmsg1(200,
+            "GetJobidFromCmdline: Failed to get client record for ClientId "
+            "%" PRIdbid "\n",
+            jr.ClientId);
       return -1;
     }
 

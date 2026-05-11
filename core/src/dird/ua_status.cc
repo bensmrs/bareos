@@ -1285,8 +1285,8 @@ static void ListTerminatedJobs(UaContext* ua)
                   edit_uint64_with_suffix(je.JobBytes, b2), termstat, dt,
                   JobName);
     } else {
-      ua->SendMsg(T_("%6" PRIu32 "  %-6s %8s %10s  %-7s  %-8s %s\n"),
-                  je.JobId, level, edit_uint64_with_commas(je.JobFiles, b1),
+      ua->SendMsg(T_("%6" PRIu32 "  %-6s %8s %10s  %-7s  %-8s %s\n"), je.JobId,
+                  level, edit_uint64_with_commas(je.JobFiles, b1),
                   edit_uint64_with_suffix(je.JobBytes, b2), termstat, dt,
                   JobName);
     }

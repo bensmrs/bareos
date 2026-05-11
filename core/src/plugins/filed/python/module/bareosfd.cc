@@ -1970,10 +1970,9 @@ static PyObject* PyStatPacket_repr(PyStatPacket* self)
        ", atime=%lld, mtime=%lld, ctime=%lld, blksize=%" PRIu32
        ", blocks=%" PRIu64 ")",
        self->dev, self->ino, static_cast<unsigned int>(self->mode & ~S_IFMT),
-       self->nlink, self->uid,
-       self->gid, self->rdev, self->size, static_cast<long long>(self->atime),
-       static_cast<long long>(self->mtime), static_cast<long long>(self->ctime),
-       self->blksize, self->blocks);
+       self->nlink, self->uid, self->gid, self->rdev, self->size,
+       static_cast<long long>(self->atime), static_cast<long long>(self->mtime),
+       static_cast<long long>(self->ctime), self->blksize, self->blocks);
 
   s = PyUnicode_FromString(buf.c_str());
 

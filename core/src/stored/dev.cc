@@ -620,9 +620,8 @@ void Device::OpenDevice(DeviceControlRecord* dcr, DeviceMode omode)
   open_mode = omode;
   set_mode(omode);
 
-  Dmsg3(100, "open archive: mode=%s open(%s, %08o, 0640)\n",
-        mode_to_str(omode), archive_name.c_str(),
-        static_cast<unsigned int>(oflags));
+  Dmsg3(100, "open archive: mode=%s open(%s, %08o, 0640)\n", mode_to_str(omode),
+        archive_name.c_str(), static_cast<unsigned int>(oflags));
 
   if ((fd = d_open(archive_name.c_str(), oflags, 0640)) < 0) {
     BErrNo be;

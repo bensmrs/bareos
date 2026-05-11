@@ -492,8 +492,8 @@ try_again:
 
     JobId = RunJob(jcr);
 
-    Dmsg4(100, "JobId=%" PRIu32 " NewJobId=%" PRIu32
-               " using pool %s priority=%d\n",
+    Dmsg4(100,
+          "JobId=%" PRIu32 " NewJobId=%" PRIu32 " using pool %s priority=%d\n",
           jcr->JobId, JobId, jcr->dir_impl->res.pool->resource_name_,
           jcr->JobPriority);
 
@@ -1505,8 +1505,7 @@ static bool DisplayJobParameters(UaContext* ua,
         }
       }
       jcr->setJobLevel(L_FULL); /* default level */
-      Dmsg1(800, "JobId to restore=%" PRIu32 "\n",
-            jcr->dir_impl->RestoreJobId);
+      Dmsg1(800, "JobId to restore=%" PRIu32 "\n", jcr->dir_impl->RestoreJobId);
       if (jcr->dir_impl->RestoreJobId == 0) {
         /* RegexWhere is take before RestoreWhere */
         if (jcr->RegexWhere || (job->RegexWhere && !jcr->where)) {
