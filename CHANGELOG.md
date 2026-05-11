@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - add SUSE 15SP7 and 16.0 [PR #2505]
 - Add simple dependency generator for systemtest testrunners [PR #2484]
+- Add compiler checking for our printf-style queries [PR #2630]
 
 ### Changed
 - dirconfig: add subscription setting with comment [PR #2468]
@@ -2285,6 +2286,7 @@ If you want to migrate from your manually configured disk autochanger to simply 
 [PR #2614]: https://github.com/bareos/bareos/pull/2614
 [PR #2616]: https://github.com/bareos/bareos/pull/2616
 [PR #2629]: https://github.com/bareos/bareos/pull/2629
+[PR #2630]: https://github.com/bareos/bareos/pull/2630
 [PR #2631]: https://github.com/bareos/bareos/pull/2631
 [PR #2635]: https://github.com/bareos/bareos/pull/2635
 [PR #2638]: https://github.com/bareos/bareos/pull/2638
