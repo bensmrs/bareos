@@ -72,6 +72,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add documentation for the barri image file format [PR #2607]
 - gh: change milestone bulletpoint in PR templates [PR #2638]
 - docs: PAM add remarks about pam_sss [PR #2629]
+- Update security policy [PR #2663]
 
 ## [25.0.0] - 2025-12-01
 
@@ -2293,4 +2294,5 @@ If you want to migrate from your manually configured disk autochanger to simply 
 [PR #2642]: https://github.com/bareos/bareos/pull/2642
 [PR #2649]: https://github.com/bareos/bareos/pull/2649
 [PR #2653]: https://github.com/bareos/bareos/pull/2653
+[PR #2663]: https://github.com/bareos/bareos/pull/2663
 [unreleased]: https://github.com/bareos/bareos/tree/master
